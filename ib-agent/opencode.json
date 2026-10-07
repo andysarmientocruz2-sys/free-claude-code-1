@@ -1,0 +1,57 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/ib-qwen:latest",
+  "small_model": "ollama/ib-qwen:latest",
+  "enabled_providers": ["ollama"],
+  "share": "disabled",
+  "instructions": ["TUTOR.md"],
+  "default_agent": "tutor",
+  "compaction": {"auto": true, "prune": true, "reserved": 1024},
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama local",
+      "options": {"baseURL": "http://127.0.0.1:11434/v1"},
+      "models": {
+        "ib-qwen:latest": {
+          "name": "Tutor IB - Qwen 3 4B (8k experimental)",
+          "limit": {"context": 8192, "output": 2048}
+        }
+      }
+    }
+  },
+  "agent": {
+    "tutor": {
+      "description": "Tutor IB para estudiar, practicar y trabajar con apuntes",
+      "mode": "primary",
+      "steps": 6,
+      "prompt": "Sigue TUTOR.md. Usa herramientas solo cuando sean necesarias y trabaja con fragmentos pequenos."
+    }
+  },
+  "permission": {
+    "edit": "ask",
+    "bash": "ask",
+    "external_directory": "ask",
+    "webfetch": "ask",
+    "websearch": "deny",
+    "task": "deny"
+  },
+  "command": {
+    "estudiar": {
+      "description": "Explicar un tema y practicarlo",
+      "template": "Estudiemos $ARGUMENTS. Explica una idea con un ejemplo y hazme una pregunta. Espera mi respuesta antes de continuar."
+    },
+    "examen": {
+      "description": "Practica con preguntas de una en una",
+      "template": "Hazme una practica sobre $ARGUMENTS. Presenta una pregunta por turno sin revelar la respuesta. Corrige mi respuesta antes de seguir. No la presentes como examen oficial del IB."
+    },
+    "oral": {
+      "description": "Practica escrita de English B",
+      "template": "Practiquemos English B sobre $ARGUMENTS. Habla en ingles y pregunta de una en una. Si pido analisis de un extracto, pide que lo proporcione. Da feedback sobre contenido y lenguaje; no evalues pronunciacion desde texto."
+    },
+    "guardar": {
+      "description": "Guardar progreso local",
+      "template": "Guarda el progreso de esta sesion en progreso/resumen.md usando las herramientas. Lee el archivo existente primero si existe y conserva lo relevante. Incluye tema, errores, aciertos y proximo paso. No incluyas datos personales innecesarios."
+    }
+  }
+}

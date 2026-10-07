@@ -1,0 +1,6 @@
+apuntes/
+resultados/
+progreso/
+.env
+.env.*
+node_modules/
